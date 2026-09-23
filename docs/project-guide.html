@@ -1,0 +1,1708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CLI Agent - Project Guide</title>
+<style>
+  @page { margin: 2cm; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.7;
+    color: #1a1a2e;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px 20px;
+  }
+  h1 {
+    font-size: 32px;
+    margin-bottom: 8px;
+    color: #0f3460;
+    border-bottom: 3px solid #e94560;
+    padding-bottom: 12px;
+  }
+  .subtitle {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 40px;
+  }
+  h2 {
+    font-size: 24px;
+    margin-top: 48px;
+    margin-bottom: 16px;
+    color: #0f3460;
+    border-left: 5px solid #e94560;
+    padding-left: 14px;
+  }
+  h3 {
+    font-size: 20px;
+    margin-top: 32px;
+    margin-bottom: 12px;
+    color: #16213e;
+  }
+  h4 {
+    font-size: 17px;
+    margin-top: 24px;
+    margin-bottom: 8px;
+    color: #1a1a2e;
+  }
+  p { margin-bottom: 12px; }
+  ul, ol { margin-bottom: 16px; padding-left: 24px; }
+  li { margin-bottom: 6px; }
+  .toc { margin: 30px 0 40px; padding: 24px 28px; background: #f8f9fa; border-radius: 8px; border: 1px solid #dee2e6; }
+  .toc h2 { margin-top: 0; border: none; padding-left: 0; }
+  .toc ul { list-style: none; padding-left: 0; }
+  .toc > ul > li { margin-bottom: 10px; font-weight: 600; }
+  .toc > ul > li > ul { padding-left: 20px; margin-top: 4px; }
+  .toc > ul > li > ul > li { font-weight: 400; }
+  .toc a { color: #0f3460; text-decoration: none; }
+  .toc a:hover { text-decoration: underline; }
+  .phase-card {
+    background: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+  .phase-card h3 { margin-top: 0; }
+  .phase-card .badge {
+    display: inline-block;
+    background: #0f3460;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+  }
+  .phase-card .badge.orange { background: #e94560; }
+  .phase-card .badge.green { background: #2d6a4f; }
+  .phase-card .badge.purple { background: #6c2bd9; }
+  .phase-card .badge.teal { background: #0d7377; }
+  .edge-case {
+    background: #fff3e0;
+    border-left: 4px solid #ff9800;
+    padding: 14px 18px;
+    margin-bottom: 14px;
+    border-radius: 0 6px 6px 0;
+  }
+  .edge-case h4 { color: #e65100; margin-top: 0; }
+  .resource-box {
+    background: #e3f2fd;
+    border-left: 4px solid #1976d2;
+    padding: 12px 16px;
+    margin-bottom: 10px;
+    border-radius: 0 6px 6px 0;
+    font-size: 14px;
+  }
+  .resource-box strong { color: #0d47a1; }
+  code {
+    background: #f1f3f5;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    color: #c7254e;
+  }
+  pre {
+    background: #1a1a2e;
+    color: #e8e8e8;
+    padding: 16px 20px;
+    border-radius: 6px;
+    overflow-x: auto;
+    font-size: 14px;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    margin-bottom: 16px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  th, td {
+    border: 1px solid #dee2e6;
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 14px;
+  }
+  th { background: #0f3460; color: #fff; font-weight: 600; }
+  tr:nth-child(even) { background: #f8f9fa; }
+  .diagram {
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    line-height: 1.5;
+    white-space: pre;
+    overflow-x: auto;
+  }
+  .note {
+    background: #fff8e1;
+    border: 1px solid #ffe082;
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin-bottom: 14px;
+    font-size: 14px;
+  }
+  .note strong { color: #f57f17; }
+  .separator { border: none; border-top: 1px solid #dee2e6; margin: 40px 0; }
+  .footer { margin-top: 60px; padding-top: 20px; border-top: 2px solid #0f3460; font-size: 14px; color: #666; text-align: center; }
+  .page-break { page-break-before: always; }
+</style>
+</head>
+<body>
+
+<h1>CLI Agent — Complete Project Guide</h1>
+<p class="subtitle">Architecture, Design Patterns, Memory Systems, Security, and Implementation Phases for an AI-Powered CLI Agent built with TypeScript/Node.js</p>
+
+<!-- ============================================================ -->
+<!-- TABLE OF CONTENTS -->
+<!-- ============================================================ -->
+
+<div class="toc">
+<h2>Index</h2>
+<ul>
+  <li>Phase 0 — Project Foundation &amp; Setup
+    <ul>
+      <li><a href="#p0-1">0.1 Initialize Project Structure</a></li>
+      <li><a href="#p0-2">0.2 Dev Tooling &amp; Configuration</a></li>
+      <li><a href="#p0-3">0.3 Core Type Definitions</a></li>
+    </ul>
+  </li>
+  <li>Phase 1 — CLI Interface &amp; User Experience
+    <ul>
+      <li><a href="#p1-1">1.1 Build the Chat Terminal UI</a></li>
+      <li><a href="#p1-2">1.2 Streaming &amp; Real-Time Output</a></li>
+      <li><a href="#p1-3">1.3 Input Handling &amp; Command Parsing</a></li>
+    </ul>
+  </li>
+  <li>Phase 2 — Agentic Loop (ReAct Pattern)
+    <ul>
+      <li><a href="#p2-1">2.1 Agent Loop Engine</a></li>
+      <li><a href="#p2-2">2.2 LLM Provider Abstraction (Adapter Pattern)</a></li>
+      <li><a href="#p2-3">2.3 Response Parsing &amp; Structured Output</a></li>
+    </ul>
+  </li>
+  <li>Phase 3 — Tool Registry &amp; Tool Executor
+    <ul>
+      <li><a href="#p3-1">3.1 Tool Registry (Factory / Service Locator Pattern)</a></li>
+      <li><a href="#p3-2">3.2 Tool Executor (Command Pattern)</a></li>
+      <li><a href="#p3-3">3.3 Security &amp; Sandboxing</a></li>
+      <li><a href="#p3-4">3.4 Built-in &amp; Custom Tools</a></li>
+    </ul>
+  </li>
+  <li>Phase 4 — Context Building &amp; Retrieval
+    <ul>
+      <li><a href="#p4-1">4.1 AST Parsing (TypeScript Compiler API)</a></li>
+      <li><a href="#p4-2">4.2 Embeddings Generation</a></li>
+      <li><a href="#p4-3">4.3 Vector Database Setup</a></li>
+      <li><a href="#p4-4">4.4 Incremental Index Updates</a></li>
+      <li><a href="#p4-5">4.5 Query-Time Retrieval &amp; Ranking</a></li>
+    </ul>
+  </li>
+  <li>Phase 5 — Memory Architecture
+    <ul>
+      <li><a href="#p5-1">5.1 Working Memory (In-Memory)</a></li>
+      <li><a href="#p5-2">5.2 Episodic Memory (SQLite)</a></li>
+      <li><a href="#p5-3">5.3 Procedural Memory (Config File)</a></li>
+      <li><a href="#p5-4">5.4 Memory Integration &amp; Lifecycle</a></li>
+    </ul>
+  </li>
+  <li>Phase 6 — Guardrails &amp; Error Handling
+    <ul>
+      <li><a href="#p6-1">6.1 Pre-Call Validation</a></li>
+      <li><a href="#p6-2">6.2 Post-Call Validation</a></li>
+      <li><a href="#p6-3">6.3 Output Guardrails</a></li>
+      <li><a href="#p6-4">6.4 Recovery &amp; Fallback Strategies</a></li>
+    </ul>
+  </li>
+  <li>Phase 7 — Edge Cases &amp; Their Handling
+    <ul>
+      <li><a href="#p7-1">7.1 Infinite Loops / Runaway Processes</a></li>
+      <li><a href="#p7-2">7.2 Excessive Output from Tools</a></li>
+      <li><a href="#p7-3">7.3 Malicious Code Execution</a></li>
+      <li><a href="#p7-4">7.4 Stale Embeddings / File Changes</a></li>
+      <li><a href="#p7-5">7.5 LLM Returns Irrelevant Responses</a></li>
+      <li><a href="#p7-6">7.6 User Input Variability (Synonyms &amp; Fuzzy Queries)</a></li>
+      <li><a href="#p7-7">7.7 Large Conversation History</a></li>
+    </ul>
+  </li>
+  <li>Phase 8 — Testing, Deployment &amp; Maintenance
+    <ul>
+      <li><a href="#p8-1">8.1 Testing Strategy</a></li>
+      <li><a href="#p8-2">8.2 Distribution &amp; Updates (npm)</a></li>
+      <li><a href="#p8-3">8.3 Logging &amp; Observability</a></li>
+      <li><a href="#p8-4">8.4 Future Upgrades (Docker Sandbox, Multi-Model)</a></li>
+    </ul>
+  </li>
+</ul>
+</div>
+
+<div class="note">
+  <strong>Reading Guide:</strong> Each phase is self-contained with implementation steps, design patterns, code snippets, resource links, and edge-case notes. Follow phases sequentially — each builds on the previous.
+</div>
+
+<!-- ============================================================ -->
+<!-- SYSTEM ARCHITECTURE OVERVIEW -->
+<!-- ============================================================ -->
+
+<h2>System Architecture Overview</h2>
+
+<div class="diagram">
+┌─────────────────────────────────────────────────────────────┐
+│                    CLI Agent Architecture                    │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  ┌─────────────┐    ┌──────────────┐    ┌───────────────┐  │
+│  │  Terminal    │───▶│  Agent Loop  │───▶│  LLM Provider │  │
+│  │  UI (Ink)   │    │  (ReAct)     │    │  (Adapter)    │  │
+│  └─────────────┘    └──────┬───────┘    └───────────────┘  │
+│                            │                                │
+│                   ┌────────▼────────┐                      │
+│                   │   Tool Registry  │                      │
+│                   │  (Factory/DI)   │                      │
+│                   └────────┬────────┘                      │
+│                            │                                │
+│                   ┌────────▼────────┐                      │
+│                   │  Tool Executor   │                      │
+│                   │  (Command Pat.)  │                      │
+│                   └──┬─────┬─────┬──┘                      │
+│                      │     │     │                          │
+│              ┌───────┘     │     └───────┐                  │
+│              ▼             ▼             ▼                  │
+│  ┌──────────────┐ ┌────────────┐ ┌──────────────┐          │
+│  │  File System  │ │  Shell     │ │  Docker/VM   │          │
+│  │  Tools        │ │  Commands  │ │  Sandbox     │          │
+│  └──────────────┘ └────────────┘ └──────────────┘          │
+│                                                             │
+│  ┌─────────────────────────────────────────────────────┐    │
+│  │           Context &amp; Memory Systems                   │    │
+│  │  ┌──────────┐  ┌──────────┐  ┌──────────────────┐   │    │
+│  │  │ Working   │  │ Episodic │  │   Vector DB      │   │    │
+│  │  │ Memory    │  │ (SQLite) │  │   (Embeddings)   │   │    │
+│  │  └──────────┘  └──────────┘  └──────────────────┘   │    │
+│  │  ┌─────────────────────────────────────────────┐     │    │
+│  │  │  Procedural Memory (Config/Stack Info)       │     │    │
+│  │  └─────────────────────────────────────────────┘     │    │
+│  └─────────────────────────────────────────────────────┘    │
+│                                                             │
+│  ┌─────────────────────────────────────────────────────┐    │
+│  │           Guardrails &amp; Validation Layer              │    │
+│  │  ┌───────────┐  ┌───────────┐  ┌────────────────┐   │    │
+│  │  │ Pre-Call  │  │ Post-Call │  │ Output Guards  │   │    │
+│  │  │ Validation│  │ Validation│  │ (Lint/Type)    │   │    │
+│  │  └───────────┘  └───────────┘  └────────────────┘   │    │
+│  └─────────────────────────────────────────────────────┘    │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+</div>
+
+<table>
+  <tr><th>Component</th><th>Design Pattern</th><th>Library / Tool</th><th>Purpose</th></tr>
+  <tr><td>CLI Interface</td><td>Component Composition</td><td><a href="https://github.com/vadimdemedes/ink">Ink</a> (React for CLI)</td><td>Rich terminal UI with colors, input fields, real-time output</td></tr>
+  <tr><td>Agent Loop</td><td><a href="https://react-lm.github.io/">ReAct Pattern</a></td><td>Custom implementation</td><td>Alternate between Reasoning and Acting (Tool Calls)</td></tr>
+  <tr><td>LLM Provider</td><td>Adapter Pattern</td><td>OpenAI / Anthropic SDKs</td><td>Unified interface for multiple LLM providers</td></tr>
+  <tr><td>Tool Registry</td><td>Factory / Service Locator</td><td>Custom</td><td>Register, discover, and resolve tools dynamically</td></tr>
+  <tr><td>Tool Executor</td><td>Command Pattern</td><td>Node.js <code>child_process</code></td><td>Encapsulate tool actions as command objects</td></tr>
+  <tr><td>AST Parsing</td><td>Structural Analysis</td><td><a href="https://github.com/microsoft/TypeScript/wiki/Using-the-Compiler-API">TypeScript Compiler API</a></td><td>Extract functions, classes, signatures from source code</td></tr>
+  <tr><td>Embeddings</td><td>Vector Encoding</td><td><a href="https://huggingface.co/sentence-transformers">sentence-transformers</a> / OpenAI Embeddings</td><td>Convert code chunks into semantic vectors</td></tr>
+  <tr><td>Vector Storage</td><td>Similarity Search</td><td><a href="https://github.com/facebookresearch/faiss">FAISS</a> (local) / <a href="https://github.com/asg017/sqlite-vec">sqlite-vec</a></td><td>Store and query embeddings locally</td></tr>
+  <tr><td>Episodic Memory</td><td>Structured Logging</td><td><a href="https://www.sqlite.org/">SQLite</a> via <code>better-sqlite3</code></td><td>Store conversation history, key decisions, tool call results</td></tr>
+  <tr><td>Procedural Memory</td><td>Config File</td><td>JSON / YAML</td><td>Store stack version, framework config, project metadata</td></tr>
+  <tr><td>Dependency Injection</td><td>DI Container</td><td><a href="https://tsyringe.io/">tsyringe</a> (optional)</td><td>Loose coupling between components</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<!-- PHASE 0 -->
+<!-- ============================================================ -->
+
+<h2 id="p0">Phase 0 — Project Foundation &amp; Setup</h2>
+
+<div class="phase-card" id="p0-1">
+<span class="badge">0.1</span>
+<h3>Initialize Project Structure</h3>
+<pre>cli-agent/
+├── src/
+│   ├── cli/              # Terminal UI &amp; input handling
+│   │   ├── App.tsx        # Ink app entry
+│   │   ├── InputBar.tsx   # User input component
+│   │   └── OutputArea.tsx # Streaming output display
+│   ├── agent/            # Agentic loop &amp; LLM interaction
+│   │   ├── AgentLoop.ts  # ReAct loop engine
+│   │   ├── providers/    # LLM provider adapters
+│   │   │   ├── IProvider.ts
+│   │   │   ├── OpenAIProvider.ts
+│   │   │   └── AnthropicProvider.ts
+│   │   └── parsers/      # LLM response parsers
+│   ├── tools/            # Tool system
+│   │   ├── registry/     # Tool registry (factory)
+│   │   │   └── ToolRegistry.ts
+│   │   ├── executor/     # Tool executor (command pattern)
+│   │   │   └── ToolExecutor.ts
+│   │   └── built-in/     # Built-in tool implementations
+│   │       ├── ReadFileTool.ts
+│   │       ├── ShellTool.ts
+│   │       └── FileSearchTool.ts
+│   ├── context/          # Context building &amp; retrieval
+│   │   ├── parser/       # AST parser
+│   │   │   └── CodeParser.ts
+│   │   ├── embeddings/   # Embeddings generator
+│   │   │   └── EmbeddingService.ts
+│   │   ├── vector-store/ # Vector DB interface
+│   │   │   └── VectorStore.ts
+│   │   └── retrieval/    # Query-time retrieval
+│   │       └── Retriever.ts
+│   ├── memory/           # Memory systems
+│   │   ├── WorkingMemory.ts
+│   │   ├── EpisodicMemory.ts
+│   │   └── ProceduralMemory.ts
+│   ├── guardrails/       # Validation &amp; safety
+│   │   ├── PreCallValidator.ts
+│   │   ├── PostCallValidator.ts
+│   │   └── OutputGuard.ts
+│   ├── types/            # Shared type definitions
+│   │   └── index.ts
+│   └── index.ts          # Entry point
+├── config/               # Default config files
+│   └── default-config.json
+├── tests/
+├── package.json
+├── tsconfig.json
+└── README.md
+</pre>
+<div class="resource-box"><strong>Resources:</strong> <a href="https://www.typescriptlang.org/docs/handbook/project-references.html">TypeScript Project References</a> — <a href="https://docs.npmjs.com/cli/v10/configuring-npm/package-json">package.json docs</a></div>
+</div>
+
+<div class="phase-card" id="p0-2">
+<span class="badge">0.2</span>
+<h3>Dev Tooling &amp; Configuration</h3>
+<ul>
+  <li><strong>Runtime:</strong> Node.js 20+ (LTS)</li>
+  <li><strong>Language:</strong> TypeScript 5.x with strict mode</li>
+  <li><strong>Build:</strong> <code>tsup</code> or <code>tsc</code> for bundling</li>
+  <li><strong>Linting:</strong> ESLint + Prettier</li>
+  <li><strong>Testing:</strong> Vitest (fast, compatible with TS)</li>
+  <li><strong>Package Manager:</strong> pnpm (faster, disk-efficient)</li>
+</ul>
+<div class="resource-box"><strong>Resources:</strong> <a href="https://tsup.egoist.dev/">tsup docs</a> — <a href="https://vitest.dev/">Vitest docs</a> — <a href="https://pnpm.io/">pnpm docs</a></div>
+</div>
+
+<div class="phase-card" id="p0-3">
+<span class="badge">0.3</span>
+<h3>Core Type Definitions</h3>
+<pre>// src/types/index.ts
+
+/** A tool that can be registered and executed */
+export interface Tool {
+  name: string;
+  description: string;
+  parameters: Record&lt;string, ParameterSchema&gt;;
+  execute(args: Record&lt;string, unknown&gt;): Promise&lt;ToolResult&gt;;
+}
+
+export interface ParameterSchema {
+  type: 'string' | 'number' | 'boolean' | 'array' | 'object';
+  description: string;
+  required?: boolean;
+}
+
+export interface ToolResult {
+  success: boolean;
+  data?: unknown;
+  error?: string;
+  truncated?: boolean; // true if output was capped
+}
+
+/** LLM provider abstraction */
+export interface ILLMProvider {
+  chat(messages: Message[], options?: ChatOptions): Promise&lt;ChatResponse&gt;;
+  chatStream(messages: Message[], options?: ChatOptions): AsyncIterable&lt;Chunk&gt;;
+}
+
+export interface Message {
+  role: 'system' | 'user' | 'assistant' | 'tool';
+  content: string;
+  toolCallId?: string;
+}
+
+export interface ChatOptions {
+  temperature?: number;
+  maxTokens?: number;
+  tools?: ToolDefinition[];
+}
+
+export interface ToolDefinition {
+  name: string;
+  description: string;
+  inputSchema: Record&lt;string, unknown&gt;;
+}
+
+/** Memory entry for episodic storage */
+export interface EpisodicEntry {
+  id: string;
+  timestamp: number;
+  type: 'tool_call' | 'decision' | 'observation' | 'error';
+  summary: string;
+  details?: Record&lt;string, unknown&gt;;
+}
+
+/** Project configuration (procedural memory) */
+export interface ProjectConfig {
+  stack: Record&lt;string, string&gt;;  // "typescript": "5.4", "next": "14"
+  lastUpdated: number;
+  constraints: string[];
+}
+</pre>
+</div>
+
+<div style="page-break-before: always;"></div>
+
+<!-- ============================================================ -->
+<!-- PHASE 1 -->
+<!-- ============================================================ -->
+
+<h2 id="p1">Phase 1 — CLI Interface &amp; User Experience</h2>
+
+<div class="phase-card" id="p1-1">
+<span class="badge orange">1.1</span>
+<h3>Build the Chat Terminal UI</h3>
+<p><strong>Library:</strong> <a href="https://github.com/vadimdemedes/ink">Ink</a> — React-based CLI rendering. Production-tested, used by many dev tools.</p>
+<pre>// src/cli/App.tsx (conceptual)
+import { render, Box, Text } from 'ink';
+import { InputBar } from './InputBar';
+import { OutputArea } from './OutputArea';
+import { useAgentLoop } from '../agent/useAgentLoop';
+
+export function App() {
+  const { messages, isProcessing, sendMessage } = useAgentLoop();
+
+  return (
+    &lt;Box flexDirection="column" height="100%"&gt;
+      &lt;Box flexGrow={1}&gt;
+        &lt;OutputArea messages={messages} /&gt;
+      &lt;/Box&gt;
+      &lt;InputBar onSubmit={sendMessage} disabled={isProcessing} /&gt;
+    &lt;/Box&gt;
+  );
+}
+</pre>
+<p><strong>Key Features to Implement:</strong></p>
+<ul>
+  <li>Persistent input bar at bottom (always ready for user input)</li>
+  <li>Color-coded message types — user (green), assistant (blue), tool output (yellow), errors (red)</li>
+  <li>Spinner / status indicator when agent is processing</li>
+  <li>Scroll-back for conversation history</li>
+  <li>Rich text formatting — code blocks with syntax highlighting, bold labels</li>
+</ul>
+<div class="resource-box"><strong>Resources:</strong> <a href="https://github.com/vadimdemedes/ink">Ink GitHub</a> — <a href="https://ink-docs.vercel.app/">Ink Docs</a> — <a href="https://github.com/chalk/chalk">Chalk</a> (colors) — <a href="https://github.com/sindresorhus/cli-spinners">cli-spinners</a> (loading spinners)</div>
+</div>
+
+<div class="phase-card" id="p1-2">
+<span class="badge orange">1.2</span>
+<h3>Streaming &amp; Real-Time Output</h3>
+<p><strong>Why streaming matters:</strong> The agent makes multiple tool calls before responding. Without streaming, the user stares at a blank terminal for seconds. Streaming shows progress in real time — "Analyzing...", "Executing tool...", partial responses.</p>
+<pre>// Conceptual streaming integration
+async function streamResponse(prompt: string, onChunk: (chunk: string) => void) {
+  const stream = await provider.chatStream([{ role: 'user', content: prompt }]);
+
+  for await (const chunk of stream) {
+    onChunk(chunk.content); // Updates OutputArea in real time
+  }
+}
+</pre>
+<p><strong>Implementation Plan:</strong></p>
+<ul>
+  <li>Use <code>AsyncIterable</code> from LLM provider SDKs (OpenAI supports streaming natively)</li>
+  <li>Pipe chunks into Ink's <code>useInput</code> / state updates for real-time rendering</li>
+  <li>Show intermediate status updates: "🔍 Searching codebase...", "⚙️ Running tool: readFile"</li>
+  <li>Buffer small chunks and flush periodically for performance</li>
+</ul>
+<div class="resource-box"><strong>Resources:</strong> <a href="https://platform.openai.com/docs/api-reference/streaming">OpenAI Streaming</a> — <a href="https://docs.anthropic.com/en/api/messages-streaming">Anthropic Streaming</a></div>
+</div>
+
+<div class="phase-card" id="p1-3">
+<span class="badge orange">1.3</span>
+<h3>Input Handling &amp; Command Parsing</h3>
+<ul>
+  <li><strong>Multi-line input:</strong> Support paste-friendly multi-line prompts (Alt+Enter for newline, Enter to submit)</li>
+  <li><strong>Special commands:</strong> <code>/help</code>, <code>/clear</code>, <code>/config</code>, <code>/exit</code></li>
+  <li><strong>History navigation:</strong> Up/Down arrows cycle through previous prompts</li>
+  <li><strong>Autocomplete:</strong> Tab-complete for file paths and tool names (nice-to-have)</li>
+</ul>
+<div class="resource-box"><strong>Resources:</strong> <a href="https://github.com/SBoudrias/Inquirer.js">Inquirer</a> (alternative prompt library) — <a href="https://github.com/vadimdemedes/ink/blob/master/examples/input.tsx">Ink Input Example</a></div>
+</div>
+
+<div style="page-break-before: always;"></div>
+
+<!-- ============================================================ -->
+<!-- PHASE 2 -->
+<!-- ============================================================ -->
+
+<h2 id="p2">Phase 2 — Agentic Loop (ReAct Pattern)</h2>
+
+<div class="phase-card" id="p2-1">
+<span class="badge green">2.1</span>
+<h3>Agent Loop Engine</h3>
+<p><strong>Pattern:</strong> <a href="https://react-lm.github.io/">ReAct (Reasoning + Acting)</a> — the agent alternates between reasoning about what to do and executing tool calls.</p>
+<pre>// src/agent/AgentLoop.ts (conceptual)
+export class AgentLoop {
+  async run(userInput: string): Promise&lt;string&gt; {
+    const context = await this.contextBuilder.build(userInput);
+    const history = this.memory.getRecentEpisodes(10);
+
+    let done = false;
+    let finalResponse = '';
+
+    while (!done) {
+      const response = await this.llm.chat([
+        { role: 'system', content: this.buildSystemPrompt(context) },
+        ...history,
+        { role: 'user', content: userInput },
+      ]);
+
+      const action = this.responseParser.parseAction(response);
+
+      if (action.type === 'final_answer') {
+        finalResponse = action.content;
+        done = true;
+      } else if (action.type === 'tool_call') {
+        const result = await this.toolExecutor.execute(action.toolName, action.args);
+        this.memory.addEpisode({ type: 'tool_call', summary: `${action.toolName} -> ${result.status}` });
+        // Feed result back to LLM for next reasoning step
+        history.push({ role: 'tool', content: JSON.stringify(result), toolCallId: action.id });
+      }
+    }
+
+    return finalResponse;
+  }
+}
+</pre>
+<p><strong>Loop Flow:</strong></p>
+<ol>
+  <li>Receive user input → Build context (retrieve relevant code, memory)</li>
+  <li>Call LLM with system prompt + context + conversation history</li>
+  <li>Parse LLM response → either <strong>tool_call</strong> or <strong>final_answer</strong></li>
+  <li>If tool_call → execute tool → feed observation back → go to step 2</li>
+  <li>If final_answer → return to user</li>
+</ol>
+<div class="resource-box"><strong>Resources:</strong> <a href="https://react-lm.github.io/">ReAct Paper (Google DeepMind)</a> — <a href="https://www.promptingguide.ai/techniques/react">ReAct Prompting Guide</a></div>
+</div>
+
+<div class="phase-card" id="p2-2">
+<span class="badge green">2.2</span>
+<h3>LLM Provider Abstraction (Adapter Pattern)</h3>
+<p><strong>Pattern: Adapter</strong> — define a common interface so you can swap providers (OpenAI ↔ Anthropic ↔ local models) without changing agent logic.</p>
+<pre>// src/agent/providers/IProvider.ts
+export interface ILLMProvider {
+  chat(messages: Message[], options?: ChatOptions): Promise&lt;ChatResponse&gt;;
+  chatStream(messages: Message[], options?: ChatOptions): AsyncIterable&lt;Chunk&gt;;
+}
+
+// src/agent/providers/OpenAIProvider.ts
+export class OpenAIProvider implements ILLMProvider {
+  constructor(private apiKey: string, private model: string = 'gpt-4') {}
+
+  async chat(messages: Message[], options?: ChatOptions): Promise&lt;ChatResponse&gt; {
+    // Call OpenAI API, return formatted response
+  }
+
+  async *chatStream(messages: Message[], options?: ChatOptions): AsyncIterable&lt;Chunk&gt; {
+    // Stream from OpenAI, yield chunks
+  }
+}
+
+// src/agent/providers/AnthropicProvider.ts
+export class AnthropicProvider implements ILLMProvider {
+  // Same interface, different implementation
+}
+</pre>
+<div class="resource-box"><strong>Resources:</strong> <a href="https://npmjs.com/package/openai">OpenAI SDK</a> — <a href="https://npmjs.com/package/@anthropic-ai/sdk">Anthropic SDK</a> — <a href="https://refactoring.guru/design-patterns/adapter">Adapter Pattern Guide</a></div>
+</div>
+
+<div class="phase-card" id="p2-3">
+<span class="badge green">2.3</span>
+<h3>Response Parsing &amp; Structured Output</h3>
+<p>The LLM must respond in a predictable structured format (JSON) so your code can reliably parse tool calls vs final answers.</p>
+<pre>// Expected LLM response format
+{
+  "type": "tool_call",       // or "final_answer"
+  "tool": "read_file",       // only for tool_call
+  "arguments": {
+    "path": "./src/index.ts"
+  },
+  "thought": "I need to read the entry point first",
+  "id": "call_abc123"        // unique call ID
+}
+
+// OR for final answers:
+{
+  "type": "final_answer",
+  "content": "The main entry point is `src/index.ts` which initializes the agent..."
+}
+</pre>
+<p><strong>Implementation tips:</strong></p>
+<ul>
+  <li>Use <a href="https://github.com/colinhacks/zod">Zod</a> to validate the parsed JSON structure</li>
+  <li>Handle malformed JSON gracefully — retry with a correction prompt</li>
+  <li>Use <code>response_format: { type: "json_object" }</code> on OpenAI for guaranteed JSON</li>
+</ul>
+<div class="resource-box"><strong>Resources:</strong> <a href="https://zod.dev/">Zod Schema Validation</a> — <a href="https://platform.openai.com/docs/guides/structured-outputs">OpenAI Structured Outputs</a></div>
+</div>
+
+<div style="page-break-before: always;"></div>
+
+<!-- ============================================================ -->
+<!-- PHASE 3 -->
+<!-- ============================================================ -->
+
+<h2 id="p3">Phase 3 — Tool Registry &amp; Tool Executor</h2>
+
+<div class="phase-card" id="p3-1">
+<span class="badge">3.1</span>
+<h3>Tool Registry (Factory / Service Locator Pattern)</h3>
+<p><strong>Purpose:</strong> Tools register themselves and are resolved dynamically by name. New tools can be added without modifying the agent loop.</p>
+<pre>// src/tools/registry/ToolRegistry.ts
+export class ToolRegistry {
+  private tools = new Map&lt;string, Tool&gt;();
+
+  register(tool: Tool): void {
+    this.tools.set(tool.name, tool);
+  }
+
+  registerMany(tools: Tool[]): void {
+    tools.forEach(t =&gt; this.register(t));
+  }
+
+  get(name: string): Tool {
+    const tool = this.tools.get(name);
+    if (!tool) throw new Error(`Tool "${name}" not found`);
+    return tool;
+  }
+
+  getAllDefinitions(): ToolDefinition[] {
+    return Array.from(this.tools.values()).map(t =&gt; ({
+      name: t.name,
+      description: t.description,
+      inputSchema: t.parameters,
+    }));
+  }
+}
+</pre>
+<p><strong>Key Decisions:</strong></p>
+<ul>
+  <li><strong>Dynamic loading:</strong> Tools can be loaded from plugins/packages at runtime (useful for user extensions)</li>
+  <li><strong>Registration at startup:</strong> Scan a <code>tools/</code> directory and auto-register</li>
+  <li><strong>Versioning:</strong> Each tool can have a version — helpful for updates</li>
+</ul>
+<div class="resource-box"><strong>Resources:</strong> <a href="https://refactoring.guru/design-patterns/factory-method">Factory Pattern</a> — <a href="https://martinfowler.com/articles/injection.html">Service Locator Pattern</a></div>
+</div>
+
+<div class="phase-card" id="p3-2">
+<span class="badge">3.2</span>
+<h3>Tool Executor (Command Pattern)</h3>
+<p><strong>Pattern: Command</strong> — each tool execution is encapsulated as a command object with boundaries (timeout, output limits).</p>
+<pre>// src/tools/executor/ToolExecutor.ts
+export interface ExecutionOptions {
+  timeout: number;           // ms (e.g., 30000 = 30s)
+  maxOutputBytes: number;    // (e.g., 1MB)
+  workingDirectory?: string;
+}
+
+export class ToolExecutor {
+  constructor(
+    private registry: ToolRegistry,
+    private options: ExecutionOptions
+  ) {}
+
+  async execute(toolName: string, args: Record&lt;string, unknown&gt;): Promise&lt;ToolResult&gt; {
+    const tool = this.registry.get(toolName);
+
+    // Pre-execution guardrails
+    this.preValidator.validate(tool, args);
+
+    // Execute with timeout via AbortController
+    const controller = new AbortController();
+    const timer = setTimeout(() =&gt; controller.abort(), this.options.timeout);
+
+    try {
+      const result = await tool.execute(args);
+
+      // Post-execution guardrails
+      this.postValidator.validate(result);
+
+      // Cap output size
+      if (this.exceedsMaxSize(result)) {
+        result.data = this.truncate(result.data, this.options.maxOutputBytes);
+        result.truncated = true;
+      }
+
+      return result;
+    } catch (error) {
+      if (error.name === 'AbortError') {
+        return { success: false, error: 'Tool execution timed out' };
+      }
+      return { success: false, error: error.message };
+    } finally {
+      clearTimeout(timer);
+    }
+  }
+}
+</pre>
+<p><strong>Critical Safety Features:</strong></p>
+<ul>
+  <li><strong>Timeouts:</strong> Every tool execution gets an <code>AbortController</code>-based timeout. Prevents infinite loops.</li>
+  <li><strong>Output capping:</strong> Limit stdout/stderr to a max size. Prevents memory overflow from noisy commands.</li>
+  <li><strong>Isolation:</strong> Run in <code>child_process</code> — not the main thread. A crash in the tool doesn't crash the agent.</li>
+</ul>
+<div class="resource-box"><strong>Resources:</strong> <a href="https://nodejs.org/api/child_process.html">Node.js child_process</a> — <a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">AbortController</a> — <a href="https://refactoring.guru/design-patterns/command">Command Pattern</a></div>
+</div>
+
+<div class="phase-card" id="p3-3">
+<span class="badge">3.3</span>
+<h3>Security &amp; Sandboxing</h3>
+<p><strong>Two-tier approach:</strong></p>
+<ul>
+  <li><strong>Tier 1 (Default):</strong> Spawn child processes with strict boundaries — timeout, output cap, allowed commands whitelist</li>
+  <li><strong>Tier 2 (Future/Enterprise):</strong> Docker container sandbox — each tool execution spins up a disposable container</li>
+</ul>
+<pre>// Example: Whitelist-based shell tool
+export class ShellTool implements Tool {
+  name = 'execute_shell';
+  description = 'Run a shell command';
+  parameters = { command: { type: 'string', description: 'The command to run' } };
+
+  private ALLOWED_COMMANDS = ['ls', 'cat', 'grep', 'find', 'node', 'npm', 'git'];
+
+  async execute(args: { command: string }): Promise&lt;ToolResult&gt; {
+    const baseCmd = args.command.split(' ')[0];
+    if (!this.ALLOWED_COMMANDS.includes(baseCmd)) {
+      return { success: false, error: `Command "${baseCmd}" is not allowed` };
+    }
+
+    // Spawn child process with timeout
+    const { exec } = require('child_process');
+    return new Promise((resolve) =&gt; {
+      const proc = exec(args.command, { timeout: 10000, maxBuffer: 1024 * 1024 },
+        (error, stdout, stderr) =&gt; {
+          if (error) return resolve({ success: false, error: error.message });
+          resolve({ success: true, data: stdout });
+        }
+      );
+    });
+  }
+}
+</pre>
+<p><strong>Docker Sandbox (Future):</strong></p>
+<pre>// Conceptual Docker-based executor
+docker run --rm --read-only \
+  --memory="256m" --cpus="1" \
+  --network=none \
+  -v /tmp/workspace:/workspace:ro \
+  node:20-alpine node /workspace/script.js
+</pre>
+<div class="resource-box"><strong>Resources:</strong> <a href="https://docs.docker.com/engine/security/security/">Docker Security</a> — <a href="https://firecracker-microvm.github.io/">Firecracker MicroVM</a> (for micro-VM approach)</div>
+</div>
+
+<div class="phase-card" id="p3-4">
+<span class="badge">3.4</span>
+<h3>Built-in &amp; Custom Tools</h3>
+<table>
+  <tr><th>Tool</th><th>Description</th><th>Example Usage</th></tr>
+  <tr><td><code>read_file</code></td><td>Read file contents with line ranges</td><td>Read <code>src/index.ts</code> lines 10–50</td></tr>
+  <tr><td><code>write_file</code></td><td>Write/save code changes (with confirmation)</td><td>Apply a bug fix to <code>utils.ts</code></td></tr>
+  <tr><td><code>search_code</code></td><td>Grep/search across the codebase</td><td>Find all usages of <code>ToolRegistry</code></td></tr>
+  <tr><td><code>run_test</code></td><td>Run a specific test or test suite</td><td>Run <code>pnpm test -- --grep "AgentLoop"</code></td></tr>
+  <tr><td><code>shell</code></td><td>Execute a shell command (whitelisted)</td><td><code>ls -la src/</code></td></tr>
+  <tr><td><code>list_files</code></td><td>List directory contents</td><td>List all files in <code>src/tools/</code></td></tr>
+  <tr><td><code>get_stack_info</code></td><td>Get project tech stack config</td><td>Retrieve TypeScript version, framework info</td></tr>
+</table>
+</div>
+
+<div style="page-break-before: always;"></div>
+
+<!-- ============================================================ -->
+<!-- PHASE 4 -->
+<!-- ============================================================ -->
+
+<h2 id="p4">Phase 4 — Context Building &amp; Retrieval</h2>
+
+<div class="phase-card" id="p4-1">
+<span class="badge purple">4.1</span>
+<h3>AST Parsing (TypeScript Compiler API)</h3>
+<p><strong>Key insight:</strong> You <em>don't</em> need an LLM to understand code structure. Use the TypeScript Compiler API (or Babel for JS) to parse code into AST and extract functions, classes, interfaces, and their associated comments.</p>
+<pre>// src/context/parser/CodeParser.ts (conceptual)
+import ts from 'typescript';
+
+export interface CodeChunk {
+  id: string;
+  filePath: string;
+  kind: 'function' | 'class' | 'interface' | 'variable';
+  name: string;
+  signature: string;
+  docComment: string;
+  code: string;              // The actual source text
+  startLine: number;
+  endLine: number;
+}
+
+export class CodeParser {
+  parseFile(filePath: string): CodeChunk[] {
+    const sourceFile = ts.createSourceFile(
+      filePath, fs.readFileSync(filePath, 'utf8'),
+      ts.ScriptTarget.Latest, true
+    );
+    const chunks: CodeChunk[] = [];
+
+    ts.forEachChild(sourceFile, node =&gt; this.walk(node, chunks, filePath));
+
+    return chunks;
+  }
+
+  private walk(node: ts.Node, chunks: CodeChunk[], filePath: string) {
+    if (ts.isFunctionDeclaration(node) &amp;&amp; node.name) {
+      chunks.push({
+        id: `${filePath}::${node.name.text}`,
+        filePath,
+        kind: 'function',
+        name: node.name.text,
+        signature: node.getText().split('{')[0].trim(),
+        docComment: this.getJSDoc(node),
+        code: node.getText(),
+        startLine: node.getStartLineOfPosition(sourceFile),
+        endLine: node.getEndLineOfPosition(sourceFile),
+      });
+    }
+    ts.forEachChild(node, child =&gt; this.walk(child, chunks, filePath));
+  }
+}
+</pre>
+<p><strong>What to extract from each chunk:</strong></p>
+<ul>
+  <li><strong>Identifier:</strong> Unique ID (filePath + function/class name)</li>
+  <li><strong>Signature:</strong> The function/class signature (params, return type)</li>
+  <li><strong>Doc comments:</strong> JSDoc or preceding comments</li>
+  <li><strong>Code body:</strong> The full source text (for context)</li>
+  <li><strong>Metadata:</strong> File path, line range, last modified timestamp</li>
+</ul>
+<div class="resource-box"><strong>Resources:</strong> <a href="https://github.com/microsoft/TypeScript/wiki/Using-the-Compiler-API">TypeScript Compiler API</a> — <a href="https://ts-ast-viewer.com/">TS AST Viewer</a> (interactive playground) — <a href="https://babeljs.io/docs/en/babel-parser">Babel Parser</a> (for JS projects)</div>
+</div>
+
+<div class="phase-card" id="p4-2">
+<span class="badge purple">4.2</span>
+<h3>Embeddings Generation</h3>
+<p>Convert code chunks into vector embeddings for semantic search.</p>
+<pre>// src/context/embeddings/EmbeddingService.ts
+export class EmbeddingService {
+  constructor(
+    private provider: 'openai' | 'local',
+    private model: string = 'text-embedding-3-small' // OpenAI
+  ) {}
+
+  async embed(texts: string[]): Promise&lt;number[][]&gt; {
+    if (this.provider === 'openai') {
+      const resp = await openai.embeddings.create({
+        model: this.model,
+        input: texts,
+      });
+      return resp.data.map(d =&gt; d.embedding);
+    }
+
+    if (this.provider === 'local') {
+      // Use sentence-transformers via onnx or local inference
+      // HuggingFace's Transformers.js for Node.js
+      return this.localEmbed(texts);
+    }
+  }
+}
+</pre>
+<table>
+  <tr><th>Approach</th><th>Pros</th><th>Cons</th></tr>
+  <tr><td><strong>OpenAI Embeddings API</strong><br><code>text-embedding-3-small</code></td><td>High quality, cheap ($0.02/1M tokens), no local compute</td><td>Requires internet, API cost</td></tr>
+  <tr><td><strong>Local (Transformers.js)</strong><br><code>sentence-transformers/all-MiniLM-L6-v2</code></td><td>Offline, free, private</td><td>Slower, larger memory footprint</td></tr>
+  <tr><td><strong>Cohere Embed</strong></td><td>Good quality, simple API</td><td>Requires internet, API key</td></tr>
+</table>
+<div class="resource-box"><strong>Resources:</strong> <a href="https://platform.openai.com/docs/guides/embeddings">OpenAI Embeddings</a> — <a href="https://huggingface.co/sentence-transformers">Sentence-Transformers</a> — <a href="https://github.com/xenova/transformers.js">Transformers.js</a> (local inference in Node)</div>
+</div>
+
+<div class="phase-card" id="p4-3">
+<span class="badge purple">4.3</span>
+<h3>Vector Database Setup</h3>
+<p>Local vector storage options for a CLI tool:</p>
+<table>
+  <tr><th>Option</th><th>Description</th><th>Best For</th></tr>
+  <tr><td><a href="https://github.com/facebookresearch/faiss">FAISS</a></td><td>Facebook's similarity search library. In-memory index, very fast.</td><td>Pure vector search, no persistence needed between sessions</td></tr>
+  <tr><td><a href="https://github.com/asg017/sqlite-vec">sqlite-vec</a></td><td>SQLite extension for vector search. Persisted to disk.</td><td>Persistent storage + SQL querying</td></tr>
+  <tr><td><a href="https://github.com/nmslib/hnswlib">HNSWlib</a></td><td>Hierarchical Navigable Small World graphs. Fast approximate nearest neighbors.</td><td>Large indices where speed matters</td></tr>
+  <tr><td><a href="https://www.lmdb.tech/">LMDB</a> + Flat vectors</td><td>Memory-mapped key-value store with flat vector files.</td><td>Zero-dependency, simple approach</td></tr>
+</table>
+<pre>// src/context/vector-store/VectorStore.ts (conceptual)
+export interface VectorStore {
+  insert(id: string, vector: number[], metadata: Record&lt;string, unknown&gt;): Promise&lt;void&gt;;
+  update(id: string, vector: number[], metadata: Record&lt;string, unknown&gt;): Promise&lt;void&gt;;
+  delete(id: string): Promise&lt;void&gt;;
+  search(query: number[], topK: number): Promise&lt;SearchResult[]&gt;;
+}
+
+export interface SearchResult {
+  id: string;
+  score: number;          // similarity score (cosine distance)
+  metadata: Record&lt;string, unknown&gt;;
+}
+</pre>
+<div class="resource-box"><strong>Resources:</strong> <a href="https://github.com/facebookresearch/faiss">FAISS GitHub</a> — <a href="https://github.com/asg017/sqlite-vec">sqlite-vec</a> — <a href="https://github.com/nmslib/hnswlib">HNSWlib</a></div>
+</div>
+
+<div class="phase-card" id="p4-4">
+<span class="badge purple">4.4</span>
+<h3>Incremental Index Updates</h3>
+<p><strong>Problem:</strong> When a file changes, you can't dump and rebuild the entire index. You need incremental updates.</p>
+<p><strong>Solution:</strong> Watch for file changes using <code>fs.watch</code> / <code>chokidar</code>, re-parse only the changed file, re-embed changed chunks, and update/delete vectors by ID.</p>
+<pre>// Incremental update flow
+class IndexManager {
+  async onFileChange(filePath: string) {
+    // 1. Parse only this file
+    const newChunks = this.parser.parseFile(filePath);
+
+    // 2. For each chunk, check if it changed (compare hash)
+    for (const chunk of newChunks) {
+      const existingHash = await this.getStoredHash(chunk.id);
+      const newHash = this.hash(chunk.code);
+
+      if (newHash !== existingHash) {
+        // 3. Re-embed and update
+        const vector = await this.embeddings.embed([chunk.code]);
+        await this.vectorStore.update(chunk.id, vector[0], {
+          filePath: chunk.filePath,
+          name: chunk.name,
+          kind: chunk.kind,
+          signature: chunk.signature,
+          timestamp: Date.now(),
+        });
+        await this.storeHash(chunk.id, newHash);
+      }
+    }
+
+    // 4. Handle deletions (chunks removed from file)
+    const removedChunks = await this.findRemovedChunks(filePath, newChunks);
+    for (const id of removedChunks) {
+      await this.vectorStore.delete(id);
+    }
+  }
+}
+</pre>
+<div class="resource-box"><strong>Resources:</strong> <a href="https://github.com/paulmillr/chokidar">Chokidar</a> (file watcher) — <a href="https://nodejs.org/api/fs.html#fswatchfilepath-options-listener">fs.watchFile</a></div>
+</div>
+
+<div class="phase-card" id="p4-5">
+<span class="badge purple">4.5</span>
+<h3>Query-Time Retrieval &amp; Ranking</h3>
+<pre>// src/context/retrieval/Retriever.ts
+export class Retriever {
+  async retrieve(query: string, topK: number = 10): Promise&lt;RetrievedChunk[]&gt; {
+    // 1. Embed the user query
+    const queryVector = await this.embeddings.embed([query]);
+
+    // 2. Search vector DB by semantic similarity
+    let results = await this.vectorStore.search(queryVector[0], topK * 2); // oversample
+
+    // 3. Apply metadata filters (context cues)
+    if (query.match(/frontend|ui|component/i)) {
+      results = results.filter(r =&gt;
+        r.metadata.filePath?.includes('components/') ||
+        r.metadata.filePath?.includes('ui/') ||
+        r.metadata.filePath?.endsWith('.tsx')
+      );
+    }
+
+    if (query.match(/recent|latest|new|last/i)) {
+      results = results.sort((a, b) =&gt;
+        (b.metadata.timestamp as number) - (a.metadata.timestamp as number)
+      );
+    }
+
+    // 4. Rank and return top K
+    return results.slice(0, topK).map(r =&gt; ({
+      id: r.id,
+      code: this.loadOriginalCode(r.id),
+      score: r.score,
+      metadata: r.metadata,
+    }));
+  }
+}
+</pre>
+<p><strong>Context Cues (Metadata Filtering):</strong></p>
+<ul>
+  <li><strong>File path:</strong> Filter by module/folder (e.g., "frontend", "backend")</li>
+  <li><strong>Timestamp:</strong> Sort/filter by recency when query implies "recent"</li>
+  <li><strong>Kind:</strong> Filter by function/class/interface type</li>
+  <li><strong>Module name:</strong> Match against known project modules</li>
+</ul>
+<div class="resource-box"><strong>Resources:</strong> <a href="https://www.pinecone.io/learn/vector-similarity/">Vector Similarity Explained</a> — <a href="https://en.wikipedia.org/wiki/Cosine_similarity">Cosine Similarity</a></div>
+</div>
+
+<div style="page-break-before: always;"></div>
+
+<!-- ============================================================ -->
+<!-- PHASE 5 -->
+<!-- ============================================================ -->
+
+<h2 id="p5">Phase 5 — Memory Architecture</h2>
+
+<div class="phase-card" id="p5-1">
+<span class="badge teal">5.1</span>
+<h3>Working Memory (In-Memory)</h3>
+<p><strong>What it holds:</strong> Current conversation state — the active user query, the last N turns, current context snippets, active tool results.</p>
+<pre>// src/memory/WorkingMemory.ts
+export class WorkingMemory {
+  private turns: Message[] = [];
+  private maxTurns: number = 20;   // Limit to avoid token overflow
+
+  addTurn(message: Message): void {
+    this.turns.push(message);
+    if (this.turns.length > this.maxTurns) {
+      this.turns.shift(); // Evict oldest
+    }
+  }
+
+  getRecentTurns(count: number = 10): Message[] {
+    return this.turns.slice(-count);
+  }
+
+  clear(): void {
+    this.turns = [];
+  }
+}
+</pre>
+<p><strong>Working Memory is NOT persisted.</strong> It lives only during the agent session. When the CLI exits, it's gone — unless key moments were saved to episodic memory.</p>
+</div>
+
+<div class="phase-card" id="p5-2">
+<span class="badge teal">5.2</span>
+<h3>Episodic Memory (SQLite)</h3>
+<p><strong>What it holds:</strong> Structured records of important events across sessions — tool calls made, files modified, decisions taken, errors encountered.</p>
+<p>You <em>don't</em> store every LLM response. You distill interactions into structured entries at the moment they happen.</p>
+<pre>// src/memory/EpisodicMemory.ts
+import Database from 'better-sqlite3';
+
+export class EpisodicMemory {
+  private db: Database.Database;
+
+  constructor(dbPath: string) {
+    this.db = new Database(dbPath);
+    this.db.exec(`
+      CREATE TABLE IF NOT EXISTS episodes (
+        id TEXT PRIMARY KEY,
+        timestamp INTEGER NOT NULL,
+        type TEXT NOT NULL CHECK(type IN ('tool_call','decision','observation','error','file_change')),
+        summary TEXT NOT NULL,
+        details TEXT   -- JSON blob for extra data
+      )
+    `);
+  }
+
+  async add(entry: EpisodicEntry): Promise&lt;void&gt; {
+    this.db.prepare(
+      'INSERT INTO episodes (id, timestamp, type, summary, details) VALUES (?, ?, ?, ?, ?)'
+    ).run(entry.id, entry.timestamp, entry.type, entry.summary,
+          entry.details ? JSON.stringify(entry.details) : null);
+  }
+
+  async getRecent(limit: number = 20, types?: string[]): Promise&lt;EpisodicEntry[]&gt; {
+    let query = 'SELECT * FROM episodes';
+    if (types?.length) {
+      query += ` WHERE type IN (${types.map(() => '?').join(',')})`;
+    }
+    query += ' ORDER BY timestamp DESC LIMIT ?';
+
+    return this.db.prepare(query).all(...(types || []), limit) as EpisodicEntry[];
+  }
+
+  async pruneOlderThan(timestamp: number): Promise&lt;void&gt; {
+    this.db.prepare('DELETE FROM episodes WHERE timestamp < ?').run(timestamp);
+  }
+}
+
+// Event structure for what gets stored:
+// { type: 'tool_call', summary: 'read_file: src/index.ts', details: { success: true, linesRead: 50 } }
+// { type: 'decision', summary: 'Selected OpenAIModel for this session', details: { model: 'gpt-4' } }
+// { type: 'file_change', summary: 'Modified src/agent/AgentLoop.ts', details: { diff: '...' } }
+</pre>
+<p><strong>Key Design Decisions:</strong></p>
+<ul>
+  <li><strong>Don't store raw LLM responses</strong> — they're verbose. Store summaries and outcomes.</li>
+  <li><strong>Log as you go</strong> — when a tool call completes, immediately save a structured entry. No post-hoc LLM summarization needed.</li>
+  <li><strong>Prune periodically</strong> — old episodes get archived/deleted to keep the DB lean.</li>
+</ul>
+<div class="resource-box"><strong>Resources:</strong> <a href="https://www.sqlite.org/">SQLite</a> — <a href="https://github.com/WiseLibs/better-sqlite3">better-sqlite3</a> (sync, fast, no ORM needed) — <a href="https://www.sqlite.org/wal.html">WAL mode</a> (for concurrent reads)</div>
+</div>
+
+<div class="phase-card" id="p5-3">
+<span class="badge teal">5.3</span>
+<h3>Procedural Memory (Config File)</h3>
+<p><strong>What it holds:</strong> The project's tech stack, framework versions, constraints, and environment settings. This ensures the LLM generates code compatible with the actual project setup, not assumed latest versions.</p>
+<pre>// src/memory/ProceduralMemory.ts
+// Stored as a JSON config file alongside the project
+
+// config/project-config.json
+{
+  "stack": {
+    "typescript": "5.4.5",
+    "node": "20.11.0",
+    "react": "18.3.1",
+    "next": "14.2.0",
+    "vitest": "1.6.0"
+  },
+  "constraints": [
+    "Must use pnpm (not npm)",
+    "Must not use class components — only functional components with hooks",
+    "ESLint rules: no-any, strict equality"
+  ],
+  "lastUpdated": 1747267200000
+}
+
+// Usage: Load at startup, inject into system prompt
+const config = new ProceduralMemory('./config/project-config.json');
+
+function buildSystemPrompt(context: string): string {
+  return `You are an AI coding assistant for this project.
+
+Project Stack:
+${JSON.stringify(config.getStack(), null, 2)}
+
+Constraints:
+${config.getConstraints().join('\n')}
+
+Project Context:
+${context}
+  `;
+}
+</pre>
+<p><strong>Maintenance:</strong></p>
+<ul>
+  <li>Provide commands: <code>/config set stack.typescript 5.5.0</code></li>
+  <li>Auto-detect: Scan <code>package.json</code> / <code>requirements.txt</code> on init</li>
+  <li>Periodic checks: Remind user when versions drift</li>
+</ul>
+<div class="resource-box"><strong>Resources:</strong> <a href="https://www.npmjs.com/package/config">node-config</a> — <a href="https://github.com/lorenwest/node-config">node-config GitHub</a></div>
+</div>
+
+<div class="phase-card" id="p5-4">
+<span class="badge teal">5.4</span>
+<h3>Memory Integration &amp; Lifecycle</h3>
+<div class="diagram">
+┌─────────────────────────────────────────────────────────────┐
+│                 Memory Flow During a Session                │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  User Input                                                 │
+│      │                                                      │
+│      ▼                                                      │
+│  ┌──────────────────────┐                                   │
+│  │ 1. Load Procedural   │ ◄── Config file (persistent)     │
+│  │    Memory (stack)    │                                   │
+│  └──────────┬───────────┘                                   │
+│             │                                               │
+│             ▼                                               │
+│  ┌──────────────────────┐                                   │
+│  │ 2. Load Episodic     │ ◄── SQLite (recent episodes)     │
+│  │    Memory (recent)   │                                   │
+│  └──────────┬───────────┘                                   │
+│             │                                               │
+│             ▼                                               │
+│  ┌──────────────────────┐                                   │
+│  │ 3. Build Working     │ ◄── In-memory (current turn)     │
+│  │    Memory (turns)    │                                   │
+│  └──────────┬───────────┘                                   │
+│             │                                               │
+│             ▼                                               │
+│  ┌──────────────────────┐                                   │
+│  │ 4. Run Agent Loop    │ ──► Produces tool calls,         │
+│  │    with all contexts  │     decisions, responses         │
+│  └──────────┬───────────┘                                   │
+│             │                                               │
+│             ▼                                               │
+│  ┌──────────────────────┐                                   │
+│  │ 5. Save Episodic     │ ──► SQLite (tool_call, decision) │
+│  │    Memory (new)      │                                   │
+│  └──────────────────────┘                                   │
+│                                                             │
+│  ┌──────────────────────┐                                   │
+│  │ 6. Prune old         │ ──► Cleanup old episodes         │
+│  │    Episodes (opt)    │                                   │
+│  └──────────────────────┘                                   │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+</div>
+</div>
+
+<div style="page-break-before: always;"></div>
+
+<!-- ============================================================ -->
+<!-- PHASE 6 -->
+<!-- ============================================================ -->
+
+<h2 id="p6">Phase 6 — Guardrails &amp; Error Handling</h2>
+
+<div class="phase-card" id="p6-1">
+<span class="badge">6.1</span>
+<h3>Pre-Call Validation</h3>
+<p>Before executing any tool, validate inputs to catch malformed or dangerous requests.</p>
+<pre>// src/guardrails/PreCallValidator.ts
+export class PreCallValidator {
+  validate(tool: Tool, args: Record&lt;string, unknown&gt;): void {
+    // 1. Required parameters check
+    for (const [name, param] of Object.entries(tool.parameters)) {
+      if (param.required &amp;&amp; args[name] === undefined) {
+        throw new Error(`Missing required parameter: ${name}`);
+      }
+    }
+
+    // 2. Type validation
+    for (const [name, value] of Object.entries(args)) {
+      const schema = tool.parameters[name];
+      if (schema &amp;&amp; typeof value !== schema.type) {
+        throw new Error(`Parameter "${name}" expected ${schema.type}, got ${typeof value}`);
+      }
+    }
+
+    // 3. Security: No path traversal
+    if (args.path &amp;&amp; typeof args.path === 'string') {
+      if (args.path.includes('..') || args.path.startsWith('/')) {
+        throw new Error('Path traversal detected: access denied');
+      }
+    }
+
+    // 4. Size limits on inputs
+    if (args.command &amp;&amp; typeof args.command === 'string' &amp;&amp; args.command.length > 1000) {
+      throw new Error('Command too long (max 1000 characters)');
+    }
+  }
+}
+</pre>
+</div>
+
+<div class="phase-card" id="p6-2">
+<span class="badge">6.2</span>
+<h3>Post-Call Validation</h3>
+<p>After tool execution, validate the output before feeding it back to the LLM.</p>
+<pre>// src/guardrails/PostCallValidator.ts
+export class PostCallValidator {
+  validate(result: ToolResult): void {
+    // 1. Output size check
+    if (result.data &amp;&amp; typeof result.data === 'string') {
+      if (result.data.length > 1024 * 100) { // 100KB
+        result.data = result.data.slice(0, 1024 * 100) + '\n... [truncated]';
+        result.truncated = true;
+      }
+    }
+
+    // 2. Sensitive data detection (basic)
+    if (result.data &amp;&amp; typeof result.data === 'string') {
+      const sensitivePatterns = [
+        /-----BEGIN (RSA|EC|OPENSSH) PRIVATE KEY-----/,
+        /sk-[a-zA-Z0-9]{20,}/,   // OpenAI API key pattern
+        /ghp_[a-zA-Z0-9]{36}/,    // GitHub token pattern
+        /(?:https?:\/\/)?[^\s]+\.(?:env|pem|key)\b/,
+      ];
+      for (const pattern of sensitivePatterns) {
+        if (pattern.test(result.data)) {
+          result.data = '[SENSITIVE DATA REDACTED]';
+          break;
+        }
+      }
+    }
+
+    // 3. Error detection (stderr always captured)
+    // Already handled by ToolExecutor
+  }
+}
+</pre>
+</div>
+
+<div class="phase-card" id="p6-3">
+<span class="badge">6.3</span>
+<h3>Output Guardrails</h3>
+<p>Validate the LLM's response before acting on it.</p>
+<pre>// src/guardrails/OutputGuard.ts
+export class OutputGuard {
+  check(response: LLMResponse): GuardResult {
+    const issues: string[] = [];
+
+    // 1. JSON parseable?
+    if (!this.isValidJson(response)) {
+      issues.push('Response is not valid JSON');
+    }
+
+    // 2. Tool exists?
+    if (response.type === 'tool_call') {
+      if (!this.toolRegistry.has(response.tool)) {
+        issues.push(`Tool "${response.tool}" does not exist`);
+      }
+
+      // 3. Arguments match schema?
+      const tool = this.toolRegistry.get(response.tool);
+      for (const key of Object.keys(response.arguments)) {
+        if (!tool.parameters[key]) {
+          issues.push(`Unknown parameter "${key}" for tool "${response.tool}"`);
+        }
+      }
+    }
+
+    // 4. Content safety (no code injection via prompt)
+    if (typeof response.content === 'string') {
+      if (this.containsInjectionPatterns(response.content)) {
+        issues.push('Response contains potential injection patterns');
+      }
+    }
+
+    return { valid: issues.length === 0, issues };
+  }
+}
+</pre>
+</div>
+
+<div class="phase-card" id="p6-4">
+<span class="badge">6.4</span>
+<h3>Recovery &amp; Fallback Strategies</h3>
+<table>
+  <tr><th>Situation</th><th>Recovery Strategy</th></tr>
+  <tr><td>LLM returns malformed JSON</td><td>Auto-retry with a correction prompt: "Your response was not valid JSON. Please respond with valid JSON only." (max 2 retries)</td></tr>
+  <tr><td>Tool execution fails</td><td>Log the error to episodic memory, inform the LLM and ask it to try a different approach or tool</td></tr>
+  <tr><td>Tool execution times out</td><td>Kill the process, return timeout error to LLM, ask to try a simpler command</td></tr>
+  <tr><td>LLM calls non-existent tool</td><td>Log as guardrail violation, respond with available tools list, ask to retry</td></tr>
+  <tr><td>File not found</td><td>Return clear error, suggest related files that do exist</td></tr>
+  <tr><td>Embedding service down</td><td>Fall back to keyword/grep-based search (no embeddings)</td></tr>
+</table>
+<div class="note"><strong>Key principle:</strong> Never crash. Every failure should produce a clear message and a path forward — either automatic retry or user clarification request.</div>
+</div>
+
+<div style="page-break-before: always;"></div>
+
+<!-- ============================================================ -->
+<!-- PHASE 7 -->
+<!-- ============================================================ -->
+
+<h2 id="p7">Phase 7 — Edge Cases &amp; Their Handling</h2>
+
+<div class="edge-case" id="p7-1">
+<h4>7.1 Infinite Loops / Runaway Processes</h4>
+<p><strong>Scenario:</strong> LLM asks to run <code>node run.ts</code> where <code>run.ts</code> has an infinite loop (while(true) {}).</p>
+<p><strong>Handling:</strong></p>
+<ul>
+  <li><strong>Timeouts on every tool call</strong> — AbortController-based timeout on child_process. Default: 30s.</li>
+  <li><strong>Configurable per tool</strong> — file reads can have shorter timeout (5s), shell commands longer (60s).</li>
+  <li><strong>Process tree kill</strong> — ensure child and all its sub-processes are killed on timeout.</li>
+</ul>
+<pre>// Kill entire process tree on timeout
+import { execSync } from 'child_process';
+
+function killProcessTree(pid: number) {
+  try {
+    execSync(`kill -- -$(ps -o pgid= -p ${pid} | tr -d ' ')`, { timeout: 2000 });
+  } catch {
+    process.kill(pid, 'SIGKILL'); // Force kill
+  }
+}
+</pre>
+</div>
+
+<div class="edge-case" id="p7-2">
+<h4>7.2 Excessive Output from Tools</h4>
+<p><strong>Scenario:</strong> A tool (e.g., running a test suite or cat'ing a large file) prints megabytes of data to stdout.</p>
+<p><strong>Handling:</strong></p>
+<ul>
+  <li><strong>Output byte limit:</strong> Cap at 1MB by default. Use <code>maxBuffer</code> option in <code>exec</code>.</li>
+  <li><strong>Streaming truncation:</strong> For long-running output, stream chunk by chunk and stop after limit.</li>
+  <li><strong>Flag as truncated:</strong> Set <code>truncated: true</code> in ToolResult so the LLM knows it didn't get full output.</li>
+  <li><strong>Summary mode:</strong> For very large outputs, prepend a summary: <code>"[Output truncated at 1MB. First 100 lines shown...]"</code></li>
+</ul>
+</div>
+
+<div class="edge-case" id="p7-3">
+<h4>7.3 Malicious Code Execution</h4>
+<p><strong>Scenario:</strong> User's project contains malicious code, or the LLM is prompted to run dangerous commands (<code>rm -rf /</code>, <code>curl | bash</code>).</p>
+<p><strong>Handling:</strong></p>
+<ul>
+  <li><strong>Command whitelist:</strong> Only allow safe commands (ls, cat, grep, find, node, npm, git). Block shell pipes <code>|</code>, redirects <code>></code>, <code>rm</code>, <code>sudo</code>, <code>curl</code>, <code>wget</code>.</li>
+  <li><strong>Path restriction:</strong> Limit file operations to the project directory. Block <code>..</code> and absolute paths above project root.</li>
+  <li><strong>Read-only by default:</strong> File reads are allowed by default. Writes require explicit user confirmation.</li>
+  <li><strong>Docker sandbox (future):</strong> For full isolation, run each tool in a disposable Docker container.</li>
+</ul>
+</div>
+
+<div class="edge-case" id="p7-4">
+<h4>7.4 Stale Embeddings / File Changes</h4>
+<p><strong>Scenario:</strong> User modifies a file. The vector DB still has old embeddings, so context retrieval returns outdated code.</p>
+<p><strong>Handling:</strong></p>
+<ul>
+  <li><strong>File watcher:</strong> Use <code>chokidar</code> to detect file saves. On change, re-parse that file, re-embed changed functions, update by ID.</li>
+  <li><strong>Hash-based change detection:</strong> Store a hash of each chunk's code. Only re-embed if hash changed.</li>
+  <li><strong>Startup sync:</strong> On CLI launch, check all file modification timestamps and re-index any changed files.</li>
+  <li><strong>Graceful fallback:</strong> If vector DB is stale, also do a fresh file read before feeding context to LLM.</li>
+</ul>
+</div>
+
+<div class="edge-case" id="p7-5">
+<h4>7.5 LLM Returns Irrelevant Responses</h4>
+<p><strong>Scenario:</strong> LLM goes off-topic, calls wrong tools, or gives nonsensical code suggestions.</p>
+<p><strong>Handling:</strong></p>
+<ul>
+  <li><strong>Structured output schema:</strong> Force JSON with <code>response_format</code> (OpenAI) or structured tool use (Anthropic).</li>
+  <li><strong>Validate tool existence:</strong> Before executing, check the tool is registered. If not, respond with available tools list.</li>
+  <li><strong>Lint/syntax check:</strong> Before applying code suggestions, run TypeScript compiler check on the proposed code.</li>
+  <li><strong>Clarity check:</strong> If response is vague, auto-prompt: "Please be more specific about which file and what change."</li>
+  <li><strong>Max retries:</strong> Limit the loop to N iterations (e.g., 15 tool calls max) to prevent infinite agent loops.</li>
+</ul>
+</div>
+
+<div class="edge-case" id="p7-6">
+<h4>7.6 User Input Variability (Synonyms &amp; Fuzzy Queries)</h4>
+<p><strong>Scenario:</strong> User says "fix the recent bug in the UI" — how does the system know "recent" means "last modified"?</p>
+<p><strong>Handling:</strong></p>
+<ul>
+  <li><strong>Semantic matching:</strong> The word "recent" gets embedded and its vector is close to "new", "latest", "last". Embedding captures the <em>meaning</em>.</li>
+  <li><strong>Metadata filtering:</strong> When query meaning relates to time, apply timestamp-based sorting/filtering in the retrieval step.</li>
+  <li><strong>Your code interprets:</strong> After retrieving semantic results, your code checks if the query implies time-based filtering and applies it. No LLM needed for this step.</li>
+  <li><strong>Combined approach:</strong> Semantic similarity finds <em>what</em> is relevant. Metadata filtering refines <em>which</em> specific item is relevant.</li>
+</ul>
+</div>
+
+<div class="edge-case" id="p7-7">
+<h4>7.7 Large Conversation History</h4>
+<p><strong>Scenario:</strong> After 50+ turns, the conversation history is too large for the LLM context window.</p>
+<p><strong>Handling:</strong></p>
+<ul>
+  <li><strong>Sliding window:</strong> Only keep the last N turns (e.g., 10-20) in working memory.</li>
+  <li><strong>Episodic summarization:</strong> Store key outcomes in SQLite (not raw responses). Retrieve relevant episodes when needed.</li>
+  <li><strong>Token budget:</strong> Track token usage per turn. When approaching limit, summarize old turns into a single system message.</li>
+  <li><strong>Structured summary:</strong> <code>"Earlier in the conversation: modified X file, ran Y tool, decided on Z approach."</code></li>
+</ul>
+</div>
+
+<div style="page-break-before: always;"></div>
+
+<!-- ============================================================ -->
+<!-- PHASE 8 -->
+<!-- ============================================================ -->
+
+<h2 id="p8">Phase 8 — Testing, Deployment &amp; Maintenance</h2>
+
+<div class="phase-card" id="p8-1">
+<span class="badge">8.1</span>
+<h3>Testing Strategy</h3>
+<table>
+  <tr><th>Layer</th><th>What to Test</th><th>Tools</th></tr>
+  <tr><td>Unit Tests</td><td>Individual tools, validators, parsers, memory operations</td><td><a href="https://vitest.dev/">Vitest</a></td></tr>
+  <tr><td>Integration Tests</td><td>Tool registry + executor flow, context builder pipeline, memory lifecycle</td><td>Vitest + test fixtures (sample projects)</td></tr>
+  <tr><td>Agent Loop Tests</td><td>Mock LLM provider, verify correct tool calls and final answer</td><td>Vitest + mocks</td></tr>
+  <tr><td>E2E Tests</td><td>Full user session on a sample project</td><td>Custom test harness + sample repo</td></tr>
+  <tr><td>Security Tests</td><td>Path traversal attempts, command injection, timeout enforcement</td><td>Vitest + adversarial test cases</td></tr>
+</table>
+<pre>// Example: Integration test for Tool Executor
+describe('ToolExecutor', () => {
+  it('should timeout on infinite loops', async () => {
+    const executor = new ToolExecutor(registry, { timeout: 1000 });
+    const result = await executor.execute('shell', { command: 'while true; do :; done' });
+    expect(result.success).toBe(false);
+    expect(result.error).toContain('timed out');
+  });
+
+  it('should truncate excessive output', async () => {
+    const executor = new ToolExecutor(registry, { maxOutputBytes: 100 });
+    const result = await executor.execute('shell', { command: 'yes "hello" | head -1000' });
+    expect(result.truncated).toBe(true);
+    expect(result.data.length).toBeLessThanOrEqual(100);
+  });
+
+  it('should block dangerous commands', async () => {
+    const executor = new ToolExecutor(registry);
+    const result = await executor.execute('shell', { command: 'rm -rf /' });
+    expect(result.success).toBe(false);
+    expect(result.error).toContain('not allowed');
+  });
+});
+</pre>
+</div>
+
+<div class="phase-card" id="p8-2">
+<span class="badge">8.2</span>
+<h3>Distribution &amp; Updates</h3>
+<ul>
+  <li><strong>npm package:</strong> Publish to npm registry. Users install via <code>npm install -g @yourname/cli-agent</code>.</li>
+  <li><strong>Versioning:</strong> Use semantic versioning (semver). Tools are included in the package, so updates come with <code>npm update -g @yourname/cli-agent</code>.</li>
+  <li><strong>Plugin system (future):</strong> Allow third-party tools via npm packages. Users install plugins and they auto-register.</li>
+  <li><strong>Auto-update check:</strong> On startup, ping npm registry to check for newer version. Notify user.</li>
+</ul>
+<pre>// Check for updates
+async function checkForUpdates() {
+  const current = require('./package.json').version;
+  const resp = await fetch(`https://registry.npmjs.org/@yourname/cli-agent/latest`);
+  const { version: latest } = await resp.json();
+  if (latest !== current) {
+    console.log(`Update available: ${current} → ${latest}. Run: npm update -g @yourname/cli-agent`);
+  }
+}
+</pre>
+<div class="resource-box"><strong>Resources:</strong> <a href="https://docs.npmjs.com/packages-and-modules/">npm Packages</a> — <a href="https://semver.org/">Semantic Versioning</a></div>
+</div>
+
+<div class="phase-card" id="p8-3">
+<span class="badge">8.3</span>
+<h3>Logging &amp; Observability</h3>
+<ul>
+  <li><strong>Structured logging:</strong> Use <a href="https://github.com/pinojs/pino">pino</a> for JSON-structured logs. Write to file (<code>~/.cli-agent/logs/</code>).</li>
+  <li><strong>Log levels:</strong> <code>debug</code> (tool calls), <code>info</code> (user messages), <code>warn</code> (validation warnings), <code>error</code> (failures).</li>
+  <li><strong>Telemetry (opt-in):</strong> Anonymous usage stats — which tools are used most, error rates.</li>
+  <li><strong>Debug mode:</strong> <code>--verbose</code> flag prints logs to terminal for troubleshooting.</li>
+</ul>
+</div>
+
+<div class="phase-card" id="p8-4">
+<span class="badge">8.4</span>
+<h3>Future Upgrades</h3>
+<table>
+  <tr><th>Feature</th><th>Why</th><th>Effort</th></tr>
+  <tr><td><strong>Docker Sandbox</strong></td><td>Full execution isolation for untrusted code</td><td>High</td></tr>
+  <tr><td><strong>Plugin System</strong></td><td>Community-contributed tools as npm packages</td><td>Medium</td></tr>
+  <tr><td><strong>Multi-Model Support</strong></td><td>Allow user to choose between GPT-4, Claude, Gemini, local models</td><td>Medium (architected already via Adapter pattern)</td></tr>
+  <tr><td><strong>GUI Mode</strong></td><td>Electron/web-based interface alongside CLI</td><td>High</td></tr>
+  <tr><td><strong>Team Collaboration</strong></td><td>Shared memory/index across team members (episodic DB sync)</td><td>High</td></tr>
+  <tr><td><strong>VS Code Extension</strong></td><td>Integrate agent directly into editor</td><td>Medium</td></tr>
+  <tr><td><strong>Custom Agent Personas</strong></td><td>Let users define custom system prompts and tool sets per project</td><td>Low</td></tr>
+</table>
+</div>
+
+<hr class="separator" />
+
+<!-- ============================================================ -->
+<!-- QUICK REFERENCE -->
+<!-- ============================================================ -->
+
+<h2>Quick Reference: Libraries &amp; Tools Summary</h2>
+
+<table>
+  <tr><th>Category</th><th>Library / Tool</th><th>Install</th><th>Purpose</th></tr>
+  <tr><td>CLI UI</td><td><a href="https://github.com/vadimdemedes/ink">Ink</a></td><td><code>npm install ink</code></td><td>React-based terminal UI framework</td></tr>
+  <tr><td>Colors</td><td><a href="https://github.com/chalk/chalk">Chalk</a></td><td><code>npm install chalk</code></td><td>Terminal string styling with colors</td></tr>
+  <tr><td>Spinners</td><td><a href="https://github.com/sindresorhus/cli-spinners">cli-spinners</a></td><td><code>npm install cli-spinners</code></td><td>Loading spinners for terminal</td></tr>
+  <tr><td>AST Parsing</td><td><a href="https://www.npmjs.com/package/typescript">TypeScript</a></td><td><code>npm install typescript</code></td><td>TypeScript Compiler API for AST</td></tr>
+  <tr><td>Embeddings</td><td><a href="https://www.npmjs.com/package/openai">openai</a></td><td><code>npm install openai</code></td><td>OpenAI API (embeddings + chat)</td></tr>
+  <tr><td>Local Embeddings</td><td><a href="https://github.com/xenova/transformers.js">@xenova/transformers</a></td><td><code>npm install @xenova/transformers</code></td><td>Local inference for embeddings (no API key)</td></tr>
+  <tr><td>Vector Store</td><td><a href="https://github.com/asg017/sqlite-vec">sqlite-vec</a></td><td><code>npm install sqlite-vec</code></td><td>SQLite-based vector search</td></tr>
+  <tr><td>Vector Store</td><td><a href="https://github.com/facebookresearch/faiss">faiss-node</a></td><td><code>npm install faiss-node</code></td><td>FAISS bindings for Node.js</td></tr>
+  <tr><td>Database</td><td><a href="https://github.com/WiseLibs/better-sqlite3">better-sqlite3</a></td><td><code>npm install better-sqlite3</code></td><td>SQLite for episodic memory</td></tr>
+  <tr><td>File Watcher</td><td><a href="https://github.com/paulmillr/chokidar">chokidar</a></td><td><code>npm install chokidar</code></td><td>File system change detection</td></tr>
+  <tr><td>Schema Validation</td><td><a href="https://zod.dev/">zod</a></td><td><code>npm install zod</code></td><td>Runtime schema validation for LLM responses</td></tr>
+  <tr><td>DI Container</td><td><a href="https://tsyringe.io/">tsyringe</a></td><td><code>npm install tsyringe reflect-metadata</code></td><td>Dependency injection (optional)</td></tr>
+  <tr><td>Logging</td><td><a href="https://getpino.io/">pino</a></td><td><code>npm install pino</code></td><td>Structured JSON logging</td></tr>
+  <tr><td>Testing</td><td><a href="https://vitest.dev/">vitest</a></td><td><code>npm install -D vitest</code></td><td>Unit &amp; integration testing</td></tr>
+  <tr><td>Linting</td><td><a href="https://eslint.org/">ESLint</a></td><td><code>npm install -D eslint</code></td><td>Code quality &amp; consistency</td></tr>
+  <tr><td>Formatter</td><td><a href="https://prettier.io/">Prettier</a></td><td><code>npm install -D prettier</code></td><td>Code formatting</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<!-- RESOURCES BY PHASE -->
+<!-- ============================================================ -->
+
+<h2>Resources Grouped by Phase</h2>
+
+<table>
+  <tr><th>Phase</th><th>Resources</th></tr>
+  <tr>
+    <td><strong>Phase 0: Setup</strong></td>
+    <td>
+      <a href="https://www.typescriptlang.org/docs/handbook/project-references.html">TypeScript Project Setup</a> ·
+      <a href="https://tsup.egoist.dev/">tsup (bundler)</a> ·
+      <a href="https://vitest.dev/">Vitest</a> ·
+      <a href="https://pnpm.io/">pnpm</a>
+    </td>
+  </tr>
+  <tr>
+    <td><strong>Phase 1: CLI UI</strong></td>
+    <td>
+      <a href="https://github.com/vadimdemedes/ink">Ink</a> ·
+      <a href="https://ink-docs.vercel.app/">Ink Docs</a> ·
+      <a href="https://github.com/chalk/chalk">Chalk</a> ·
+      <a href="https://github.com/sindresorhus/cli-spinners">cli-spinners</a> ·
+      <a href="https://github.com/SBoudrias/Inquirer.js">Inquirer</a>
+    </td>
+  </tr>
+  <tr>
+    <td><strong>Phase 2: Agent Loop</strong></td>
+    <td>
+      <a href="https://react-lm.github.io/">ReAct Paper</a> ·
+      <a href="https://www.promptingguide.ai/techniques/react">ReAct Prompting Guide</a> ·
+      <a href="https://www.npmjs.com/package/openai">OpenAI SDK</a> ·
+      <a href="https://www.npmjs.com/package/@anthropic-ai/sdk">Anthropic SDK</a> ·
+      <a href="https://refactoring.guru/design-patterns/adapter">Adapter Pattern</a> ·
+      <a href="https://zod.dev/">Zod</a> ·
+      <a href="https://platform.openai.com/docs/guides/structured-outputs">OpenAI Structured Outputs</a>
+    </td>
+  </tr>
+  <tr>
+    <td><strong>Phase 3: Tool System</strong></td>
+    <td>
+      <a href="https://nodejs.org/api/child_process.html">Node.js child_process</a> ·
+      <a href="https://refactoring.guru/design-patterns/command">Command Pattern</a> ·
+      <a href="https://refactoring.guru/design-patterns/factory-method">Factory Pattern</a> ·
+      <a href="https://martinfowler.com/articles/injection.html">Service Locator</a> ·
+      <a href="https://docs.docker.com/engine/security/security/">Docker Security</a> ·
+      <a href="https://firecracker-microvm.github.io/">Firecracker MicroVM</a> ·
+      <a href="https://www.npmjs.com/package/tsyringe">tsyringe (DI)</a>
+    </td>
+  </tr>
+  <tr>
+    <td><strong>Phase 4: Context &amp; Retrieval</strong></td>
+    <td>
+      <a href="https://github.com/microsoft/TypeScript/wiki/Using-the-Compiler-API">TypeScript Compiler API</a> ·
+      <a href="https://ts-ast-viewer.com/">TS AST Viewer</a> ·
+      <a href="https://babeljs.io/docs/en/babel-parser">Babel Parser</a> ·
+      <a href="https://platform.openai.com/docs/guides/embeddings">OpenAI Embeddings</a> ·
+      <a href="https://huggingface.co/sentence-transformers">Sentence-Transformers</a> ·
+      <a href="https://github.com/xenova/transformers.js">Transformers.js</a> ·
+      <a href="https://github.com/facebookresearch/faiss">FAISS</a> ·
+      <a href="https://github.com/asg017/sqlite-vec">sqlite-vec</a> ·
+      <a href="https://github.com/paulmillr/chokidar">Chokidar</a> ·
+      <a href="https://www.pinecone.io/learn/vector-similarity/">Vector Similarity</a>
+    </td>
+  </tr>
+  <tr>
+    <td><strong>Phase 5: Memory</strong></td>
+    <td>
+      <a href="https://www.sqlite.org/">SQLite</a> ·
+      <a href="https://github.com/WiseLibs/better-sqlite3">better-sqlite3</a> ·
+      <a href="https://www.sqlite.org/wal.html">WAL Mode</a> ·
+      <a href="https://www.npmjs.com/package/config">node-config</a>
+    </td>
+  </tr>
+  <tr>
+    <td><strong>Phase 6: Guardrails</strong></td>
+    <td>
+      <a href="https://zod.dev/">Zod</a> ·
+      <a href="https://owasp.org/www-project-top-ten/">OWASP Top 10</a> ·
+      <a href="https://docs.anthropic.com/en/docs/build-with-claude/guardrails">Anthropic Guardrails Guide</a>
+    </td>
+  </tr>
+  <tr>
+    <td><strong>Phase 8: Testing &amp; Deploy</strong></td>
+    <td>
+      <a href="https://vitest.dev/">Vitest</a> ·
+      <a href="https://docs.npmjs.com/packages-and-modules/">npm Packages</a> ·
+      <a href="https://semver.org/">Semantic Versioning</a> ·
+      <a href="https://getpino.io/">pino logging</a>
+    </td>
+  </tr>
+</table>
+
+<div class="footer">
+  <p>CLI Agent Project Guide — Generated from architectural discussion</p>
+  <p>Tech Stack: TypeScript 5.x · Node.js 20+ · Ink · SQLite · FAISS · Vitest</p>
+</div>
+
+</body>
+</html>
